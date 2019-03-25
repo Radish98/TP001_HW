@@ -1,7 +1,9 @@
 package com.example.tp_lab_001;
 
 import android.app.Activity;
+import android.content.ComponentCallbacks;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +30,7 @@ public class GeneralFragment extends Fragment {
     TextView numbSet;
     Button addNumb;
 
+    private Integer columns;
 
     private String LIST_SAVED = "ListArray";
     private ArrayList<String> strings;
@@ -63,8 +66,13 @@ public class GeneralFragment extends Fragment {
 
         strings = new ArrayList<>();
 
-        final GridLayoutManager gridManager = new GridLayoutManager(view.getContext(), 3);
-        myRecycler.setLayoutManager(gridManager);
+        if(getActivity().getResources().getConfiguration().orientation ==Configuration.ORIENTATION_LANDSCAPE){
+            columns = 4;
+        }else {
+            columns =3 ;
+        }
+        myRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), columns));
+
 
         if(savedInstanceState == null) {
             fillList(strings);
@@ -108,6 +116,7 @@ public class GeneralFragment extends Fragment {
         }
 
     }
+
 //    @Override
 //    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
 //        super.onViewStateRestored(savedInstanceState);
@@ -132,12 +141,13 @@ public class GeneralFragment extends Fragment {
         Toast.makeText(getContext(),"saved"+strings.size(),Toast.LENGTH_SHORT).show();
     }
 
-
-
+    
 
     @Override
     public void onPause() {
         super.onPause();
         onSaveInstanceState(new Bundle());
     }
+
+
 }
