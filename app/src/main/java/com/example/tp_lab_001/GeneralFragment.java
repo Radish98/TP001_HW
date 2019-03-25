@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,10 +27,13 @@ public class GeneralFragment extends Fragment {
     RecyclerView myRecycler;
     TextView numbSet;
     Button addNumb;
+
+
+    private String LIST_SAVED = "ListArray";
     private ArrayList<String> strings;
 
     public interface onTouchEventListener{
-        public void touchEvent(int i);
+        void touchEvent(int i);
     }
 
     onTouchEventListener touchEventListener;
@@ -44,24 +49,33 @@ public class GeneralFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_general, container, false);
-        strings = new ArrayList<>();
 
-        fillList(strings);
-
-        Log.d("test", " size " + strings.size());
 
         addNumb = view.findViewById(R.id.addNumb);
         myRecycler = view.findViewById(R.id.myRecycler);
-//
-//        setGrid(3);
+        numbSet = view.findViewById(R.id.numbSet);
+
+        strings = new ArrayList<>();
 
         final GridLayoutManager gridManager = new GridLayoutManager(view.getContext(), 3);
         myRecycler.setLayoutManager(gridManager);
+
+        if(savedInstanceState == null) {
+            fillList(strings);
+            Log.d("test", "null"+ strings.size());
+            Toast.makeText(getContext(),"null"+strings.size(),Toast.LENGTH_SHORT).show();
+
+        }else{
+            strings = savedInstanceState.getStringArrayList(LIST_SAVED);
+            Log.d("test", "create"+ strings.size());
+            Toast.makeText(getContext(),"create"+strings.size(),Toast.LENGTH_SHORT).show();
+        }
 
 
         final DataAdater mAdapter = new DataAdater(view.getContext(), strings, new DataAdater.OnItemClickListener() {
@@ -69,15 +83,11 @@ public class GeneralFragment extends Fragment {
             public void onItemClick(int i) {
 
                 touchEventListener.touchEvent(i);
+
             }
         });
 
         myRecycler.setAdapter(mAdapter);
-
-        numbSet = view.findViewById(R.id.numbSet);
-
-
-
 
         addNumb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,19 +95,49 @@ public class GeneralFragment extends Fragment {
                 int newNubm = strings.size()+1;
                 strings.add(Integer.toString(newNubm));
                 mAdapter.notifyItemChanged(strings.size());
-                Log.d("test","tag");
             }
         });
-
 
         return view;
     }
 
     private void fillList(List<String> string) {
+
         for (int i = 1; i < 1001; i++) {
             string.add(i + "");
         }
 
     }
+//    @Override
+//    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+//        super.onViewStateRestored(savedInstanceState);
+//        if(savedInstanceState == null) {
+//            fillList(strings);
+//            Log.d("test", "null"+ strings.size());
+//            Toast.makeText(getContext(),"null"+strings.size(),Toast.LENGTH_SHORT).show();
+//
+//        }else{
+//            strings = savedInstanceState.getStringArrayList(LIST_SAVED);
+//            Log.d("test", "create"+ strings.size());
+//            Toast.makeText(getContext(),"create"+strings.size(),Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList( LIST_SAVED ,strings);
+        Log.d("test", "SaVED"+ strings.size());
+        Toast.makeText(getContext(),"saved"+strings.size(),Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        onSaveInstanceState(new Bundle());
+    }
 }
