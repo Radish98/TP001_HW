@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements GeneralFragment.onTouchEventListener {
 
@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity implements GeneralFragment.o
     Fragment genFrag, showFrag;
     FragmentTransaction fT;
 
-
+    private int setNumb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements GeneralFragment.o
             fT.add(R.id.generalFragment, genFrag);
             fT.commit();
         }
+
     }
 
     @Override
@@ -31,11 +32,12 @@ public class MainActivity extends AppCompatActivity implements GeneralFragment.o
         showFrag = new ShowFragment();
         fT = getSupportFragmentManager().beginTransaction();
         fT.addToBackStack(null);
-//        fT.remove(genFrag);
-//        fT.add(R.id.generalFragment,showFrag);
-        fT.replace(R.id.generalFragment, showFrag);
-        int setNumb = i + 1;
+//        fT.hide(genFrag);
+        fT.add(R.id.generalFragment,showFrag);
+//        fT.replace(R.id.generalFragment, showFrag);
+        setNumb = i + 1;
         Bundle bundle = new Bundle();
+        Log.d("numtest","numbis"+setNumb);
         bundle.putInt("getInt", setNumb);
         showFrag.setArguments(bundle);
         fT.commit();

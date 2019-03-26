@@ -9,8 +9,10 @@
         android:text="@string/addNumb"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="215dp"
+        android:textColor="@color/btnText"
+        android:layout_height="53dp"
+        android:background="@drawable/button_tp_hw"/>
     <android.support.v7.widget.RecyclerView
         android:orientation="vertical"
         android:layout_below="@+id/addNumb"

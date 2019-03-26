@@ -3,6 +3,7 @@ package com.example.tp_lab_001;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +35,15 @@ public class ShowFragment extends Fragment {
 
         this.view =inflater.inflate(R.layout.fragment_show, container, false);
         showTextView = view.findViewById(R.id.showNumb);
+        Log.d("numtest","sendednumbis"+Integer.toString(getArguments().getInt("getInt")));
         dataSend(Integer.toString(getArguments().getInt("getInt")));
 
 
 
         return view;
     }
+
+
 
 
 }

@@ -1,13 +1,10 @@
 package com.example.tp_lab_001;
 
 import android.app.Activity;
-import android.content.ComponentCallbacks;
-import android.content.Context;
+
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -117,21 +114,6 @@ public class GeneralFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-//        super.onViewStateRestored(savedInstanceState);
-//        if(savedInstanceState == null) {
-//            fillList(strings);
-//            Log.d("test", "null"+ strings.size());
-//            Toast.makeText(getContext(),"null"+strings.size(),Toast.LENGTH_SHORT).show();
-//
-//        }else{
-//            strings = savedInstanceState.getStringArrayList(LIST_SAVED);
-//            Log.d("test", "create"+ strings.size());
-//            Toast.makeText(getContext(),"create"+strings.size(),Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -141,13 +123,13 @@ public class GeneralFragment extends Fragment {
         Toast.makeText(getContext(),"saved"+strings.size(),Toast.LENGTH_SHORT).show();
     }
 
-    
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        onSaveInstanceState(new Bundle());
-    }
+
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        onSaveInstanceState(new Bundle());
+//    }
 
 
 }
