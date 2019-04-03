@@ -52,7 +52,7 @@ public class DataAdater extends RecyclerView.Adapter<DataAdater.MyViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(i);
+                    listener.onItemClick(getAdapterPosition());
                 }
             });
 
